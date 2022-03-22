@@ -1,6 +1,11 @@
 import React from 'react';
 
-function Cards() {
+function Cards(props) {
+  const updateScore = () => {
+    props.scoreFunc(() => {
+      return props.score + 1;
+    });
+  };
   let array = [];
   const fillArray = () => {
     for (let i = 1; i < 13; i++) {
@@ -11,7 +16,12 @@ function Cards() {
   fillArray();
   let cards = array.map((item, index) => {
     return (
-      <div className="card" key={index + 1} data-num={index + 1}>
+      <div
+        onClick={updateScore}
+        className="card"
+        key={index + 1}
+        data-num={index + 1}
+      >
         <img
           src={require(`../images/owl${index + 1}.jpg`)}
           alt="owl"
