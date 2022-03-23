@@ -52,6 +52,8 @@ function Cards(props) {
       </div>
     );
   });
+  // sort the divs randomly
+  cards = cards.sort(() => Math.random() - 0.5);
   return <div className="cards--container"> {cards} </div>;
 }
 
