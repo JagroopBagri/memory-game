@@ -6,7 +6,7 @@ function Cards(props) {
   // function that fills the previously made array with 12 items that hold the boolean "false"
   const fillClickArray = () => {
     for (let i = 1; i < 13; i++) {
-      clickedArray.push(false);
+      clickedArray.push('false');
     }
     return 0;
   };
@@ -18,6 +18,20 @@ function Cards(props) {
   const updateScore = () => {
     props.scoreFunc(() => {
       return props.score + 1;
+    });
+  };
+  // function that will be used in OnCick event listener to reset score when an owl that has already been clicked is clicked again
+  const resetScore = () => {
+    props.scoreFunc(() => {
+      return 0;
+    });
+  };
+  // function that will be used to update the clicked array
+  const updateClicked = (e) => {
+    setClicked(() => {
+      let a = clicked;
+      a[e.target.dataset.num] = 'true';
+      return a;
     });
   };
   // declare an array that will be used to create "owl" elements
@@ -32,22 +46,26 @@ function Cards(props) {
   // invoke above function
   fillOwlArray();
   // onClick event function
-  const cardEvent = () => {
-    updateScore();
+  const cardEvent = (e) => {
+    console.log(e.target);
+    if (e.target.dataset.clicked === 'false') {
+      updateScore();
+      e.target.dataset.clicked = 'true';
+    } else {
+      resetScore();
+    }
   };
   // using map function to create react jsx elements
   let cards = owlArray.map((item, index) => {
     return (
-      <div
-        onClick={cardEvent}
-        className="card"
-        key={index + 1}
-        data-num={index + 1}
-      >
+      <div className="card" key={index + 1}>
         <img
+          onClick={cardEvent}
           src={require(`../images/owl${index + 1}.jpg`)}
           alt="owl"
           className="owl"
+          data-num={index}
+          data-clicked={clicked[index]}
         />
       </div>
     );
