@@ -42,6 +42,16 @@ function Cards(props) {
       return a;
     });
   };
+  // function that will save highest score to local storage
+  const saveToLocalStorage = () => {
+    if (localStorage.getItem('highScore')) {
+      if (localStorage.getItem('highScore') < props.score + 1) {
+        localStorage.setItem('highScore', props.score + 1);
+      }
+    } else {
+      localStorage.setItem('highScore', props.score + 1);
+    }
+  };
   // declare an array that will be used to create "owl" elements
   let owlArray = [];
   // function that fills owl array with 12 items
@@ -58,6 +68,7 @@ function Cards(props) {
     if (e.target.dataset.clicked === 'false') {
       updateScore();
       updateClicked(e);
+      saveToLocalStorage();
     } else {
       resetScore();
       resetClicked();

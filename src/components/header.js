@@ -10,7 +10,9 @@ function Header(props) {
       </div>
       <div className="scores">
         <div className="current--score">Score: {props.score}</div>
-        <div className="high--score">Best: </div>
+        <div className="high--score">
+          Best: {localStorage.getItem('highScore')}
+        </div>
       </div>
     </div>
   );
